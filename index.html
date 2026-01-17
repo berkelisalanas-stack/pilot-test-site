@@ -1,87 +1,55 @@
 <!DOCTYPE html>
 <html lang="lt">
 <head>
-  <meta charset="UTF-8">
-  <title>Pilot Fatigue & Stress Assessment</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f4f6f8;
-    }
-    .container {
-      max-width: 700px;
-      background: white;
-      margin: 40px auto;
-      padding: 30px;
-      border-radius: 8px;
-    }
-    .question {
-      margin-bottom: 20px;
-    }
-    button {
-      padding: 10px 20px;
-      font-size: 16px;
-    }
-  </style>
+  <meta charset="UTF-8" />
+  <title>Piloto sprendimų testas</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<div class="container">
-  <h1>Pilot Fatigue & Stress Assessment</h1>
-  <p>Atsakykite į klausimus.</p>
+  <div class="container">
 
-  <form id="quiz">
+    <h1>✈️ Piloto sprendimų testas</h1>
+    <p>Atsakyk į klausimus ir sužinok savo sprendimų profilį</p>
 
-    <div class="question">
-      <p>1. Kaip dažnai jaučiate nuovargį prieš skrydį?</p>
-      <label><input type="radio" name="q1" value="A"> A – Niekada</label><br>
-      <label><input type="radio" name="q1" value="B"> B – Retai</label><br>
-      <label><input type="radio" name="q1" value="C"> C – Kartais</label><br>
-      <label><input type="radio" name="q1" value="D"> D – Dažnai</label><br>
-      <label><input type="radio" name="q1" value="E"> E – Beveik visada</label>
+    <form id="quiz">
+
+      <div class="question">
+        <h3>1. Kaip reaguoji į netikėtą situaciją?</h3>
+        <label><input type="radio" name="q1" value="A"> Greitai ir intuityviai</label>
+        <label><input type="radio" name="q1" value="B"> Pagal procedūras</label>
+        <label><input type="radio" name="q1" value="C"> Pirmiausia analizuoju</label>
+      </div>
+
+      <div class="question">
+        <h3>2. Kaip priimi sprendimus?</h3>
+        <label><input type="radio" name="q2" value="A"> Vienas</label>
+        <label><input type="radio" name="q2" value="B"> Su komanda</label>
+        <label><input type="radio" name="q2" value="C"> Lėtai, bet užtikrintai</label>
+      </div>
+
+      <div class="question">
+        <h3>3. Stresas skrydžio metu?</h3>
+        <label><input type="radio" name="q3" value="A"> Mane mobilizuoja</label>
+        <label><input type="radio" name="q3" value="B"> Laikausi checklistų</label>
+        <label><input type="radio" name="q3" value="C"> Stengiuosi jo vengti</label>
+      </div>
+
+      <button type="button" onclick="calculateResult()">Gauti rezultatą</button>
+
+    </form>
+
+    <!-- Calculating -->
+    <div id="loading" class="hidden">
+      <div class="spinner"></div>
+      <p>Calculating flight profile...</p>
     </div>
 
-    <div class="question">
-      <p>2. Kaip vertinate savo miego kokybę?</p>
-      <label><input type="radio" name="q2" value="A"> A – Puiki</label><br>
-      <label><input type="radio" name="q2" value="B"> B – Gera</label><br>
-      <label><input type="radio" name="q2" value="C"> C – Vidutinė</label><br>
-      <label><input type="radio" name="q2" value="D"> D – Prasta</label><br>
-      <label><input type="radio" name="q2" value="E"> E – Labai prasta</label>
-    </div>
+    <!-- Result -->
+    <div id="result" class="hidden"></div>
 
-    <div class="question">
-      <p>3. Ar patiriate psichologinį spaudimą darbe?</p>
-      <label><input type="radio" name="q3" value="A"> A – Ne</label><br>
-      <label><input type="radio" name="q3" value="B"> B – Retai</label><br>
-      <label><input type="radio" name="q3" value="C"> C – Kartais</label><br>
-      <label><input type="radio" name="q3" value="D"> D – Dažnai</label><br>
-      <label><input type="radio" name="q3" value="E"> E – Nuolat</label>
-    </div>
+  </div>
 
-    <button type="button" onclick="submitTest()">Gauti rezultatą</button>
-
-  </form>
-
-  <p id="output"></p>
-</div>
-
-<script>
-function submitTest() {
-  const a1 = document.querySelector('input[name="q1"]:checked');
-  const a2 = document.querySelector('input[name="q2"]:checked');
-  const a3 = document.querySelector('input[name="q3"]:checked');
-
-  if (!a1 || !a2 || !a3) {
-    alert("Prašome atsakyti į visus klausimus.");
-    return;
-  }
-
-  const combination = a1.value + a2.value + a3.value;
-  document.getElementById("output").innerText =
-    "Jūsų atsakymų kombinacija: " + combination;
-}
-</script>
-
+  <script src="script.js"></script>
 </body>
 </html>
