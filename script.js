@@ -108,6 +108,20 @@ const questions = [
   }
 ];
 
+const domainMap = [
+  "sleep",       // Q1
+  "sleep",       // Q2
+  "cognitive",   // Q3
+  "cognitive",   // Q4
+  "cognitive",   // Q5
+  "sleep",       // Q6
+  "decision",    // Q7
+  "recovery",    // Q8
+  "decision",    // Q9
+  "cognitive"    // Q10
+];
+
+
 let current = 0;
 const answers = [];
 
@@ -144,14 +158,87 @@ function selectAnswer(element, value) {
   nextBtn.disabled = false;
 }
 
+function calculateDomains() {
+  const scores = {
+    sleep: 0,
+    cognitive: 0,
+    decision: 0,
+    recovery: 0
+  };
+
+  answers.forEach((_, index) => {
+    // pasirinkimo indeksas = 0..3
+    const selected = document.querySelectorAll(".answer.selected")[0];
+    // saugiau: remiamės pasirinkimo eiliškumu
+    const optionIndex = answers[index] ? document
+      .querySelectorAll(".answers .answer.selected").length : 0;
+
+    // paprasčiau: balai = current pasirinkimo indexas (0–3)
+    const value = document
+      .querySelectorAll(".answers .answer.selected").length;
+
+    // BET mes jau turim answers[] tik tekstams,
+    // todėl balus skaičiuosim taip:
+    const answerText = answers[index];
+    const optionIdx = questions[index].options.indexOf(answerText);
+    const points = Math.max(0, optionIdx); // 0–3
+
+    const domain = domainMap[index];
+    scores[domain] += points;
+  });
+
+  return scores;
+}
+
+
 nextBtn.onclick = () => {
   current++;
   if (current < questions.length) {
     loadQuestion();
-  } else {
-    questionText.textContent = "System processing assessment data...";
-    answersDiv.innerHTML = "";
-    nextBtn.style.display = "none";
-    progressBar.style.width = "100%";
-  }
+ } else {
+  questionText.textContent = "System processing assessment data...";
+  answersDiv.innerHTML = "";
+  nextBtn.style.display = "none";
+  progressBar.style.width = "100%";
+
+  setTimeout(showResults, 1500);
+}
+
+function showResults() {
+  const scores = calculateDomains();
+
+  const max = 9; // max per domain (3 balai × ~3 klausimai)
+
+  document.getElementById("card").innerHTML = `
+    <div class="question">Fatigue Risk Profile</div>
+
+    ${renderBar("Sleep & Circadian Risk", scores.sleep, max)}
+    ${renderBar("Cognitive Performance Risk", scores.cognitive, max)}
+    ${renderBar("Operational Decision Risk", scores.decision, max)}
+    ${renderBar("Recovery & Mitigation Risk", scores.recovery, max)}
+
+    <div class="recommendations">
+      <h4>Operational Guidance</h4>
+      <ul>
+        <li><strong>Before duty:</strong> Review sleep adequacy and consider mitigation strategies if alertness is reduced.</li>
+        <li><strong>During duty:</strong> Increase deliberate cross-checking during high workload phases.</li>
+        <li><strong>Recovery:</strong> Prioritize rest opportunities and avoid cumulative sleep restriction.</li>
+      </ul>
+    </div>
+  `;
+}
+
+function renderBar(label, value, max) {
+  const percent = Math.min(100, Math.round((value / max) * 100));
+  return `
+    <div class="bar-block">
+      <div class="bar-label">${label}</div>
+      <div class="bar-bg">
+        <div class="bar-fill" style="width:${percent}%"></div>
+      </div>
+    </div>
+  `;
+}
+  
+  
 };
