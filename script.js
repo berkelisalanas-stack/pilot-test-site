@@ -1,57 +1,78 @@
-function calculateResult() {
-  const answers = [];
-
-  for (let i = 1; i <= 3; i++) {
-    const answer = document.querySelector(`input[name="q${i}"]:checked`);
-    if (!answer) {
-      alert("Atsakyk į visus klausimus");
-      return;
-    }
-    answers.push(answer.value);
+const questions = [
+  {
+    text: "During recent duty periods, how often have you continued operating despite feeling cognitively slowed or less alert than normal?",
+    options: [
+      "Not observed",
+      "Occasionally",
+      "Frequently",
+      "Consistently"
+    ]
+  },
+  {
+    text: "How would you rate your sleep quality prior to early or late duty start times?",
+    options: [
+      "Consistently adequate",
+      "Generally adequate",
+      "Often inadequate",
+      "Severely inadequate"
+    ]
+  },
+  {
+    text: "How often do you notice increased effort required to maintain situational awareness?",
+    options: [
+      "Rarely",
+      "Sometimes",
+      "Often",
+      "Almost every duty period"
+    ]
   }
+];
 
-  const pattern = answers.join("");
+let current = 0;
+const answers = [];
 
-  document.getElementById("quiz").classList.add("hidden");
-  document.getElementById("loading").classList.remove("hidden");
+const questionText = document.getElementById("questionText");
+const answersDiv = document.getElementById("answers");
+const nextBtn = document.getElementById("nextBtn");
+const progressBar = document.getElementById("progressBar");
+const stepText = document.getElementById("stepText");
 
-  setTimeout(() => {
-    document.getElementById("loading").classList.add("hidden");
-    showResult(pattern);
-  }, 2000);
+loadQuestion();
+
+function loadQuestion() {
+  questionText.textContent = questions[current].text;
+  answersDiv.innerHTML = "";
+  nextBtn.classList.remove("enabled");
+  nextBtn.disabled = true;
+
+  stepText.textContent = `Assessment ${current + 1} of ${questions.length}`;
+  progressBar.style.width = `${(current / questions.length) * 100}%`;
+
+  questions[current].options.forEach(option => {
+    const div = document.createElement("div");
+    div.className = "answer";
+    div.textContent = option;
+    div.onclick = () => selectAnswer(div, option);
+    answersDiv.appendChild(div);
+  });
 }
 
-function showResult(pattern) {
-  const resultDiv = document.getElementById("result");
-  resultDiv.classList.remove("hidden");
-
-  let resultText = "";
-
-  if (pattern === "ABC") {
-    resultText = `
-      <h2>✈️ Rezultatas #1 – Analitinis pilotas</h2>
-      <p>Tu pasitiki struktūra, procedūromis ir logika.</p>
-      <ul>
-        <li>Stiprybė: stabilūs sprendimai</li>
-        <li>Rizika: per ilgas svarstymas</li>
-        <li>Patarimas: treniruok sprendimų greitį</li>
-      </ul>
-    `;
-  } 
-  else if (pattern === "BAC") {
-    resultText = `
-      <h2>✈️ Rezultatas #2 – Komandinis pilotas</h2>
-      <p>Puikiai dirbi su kitais ir pasitiki CRM.</p>
-      <p>Patarimas: mokykis lyderystės spaudimo metu.</p>
-    `;
-  } 
-  else {
-    resultText = `
-      <h2>✈️ Rezultatas #3 – Adaptuojantis pilotas</h2>
-      <p>Prisitaikai prie situacijos, bet kartais trūksta krypties.</p>
-      <p>Patarimas: stiprink standartų laikymąsi.</p>
-    `;
-  }
-
-  resultDiv.innerHTML = resultText;
+function selectAnswer(element, value) {
+  document.querySelectorAll(".answer").forEach(a => a.classList.remove("selected"));
+  element.classList.add("selected");
+  answers[current] = value;
+  nextBtn.classList.add("enabled");
+  nextBtn.disabled = false;
 }
+
+nextBtn.onclick = () => {
+  current++;
+  if (current < questions.length) {
+    loadQuestion();
+  } else {
+    questionText.textContent = "System processing assessment data...";
+    answersDiv.innerHTML = "";
+    nextBtn.style.display = "none";
+    progressBar.style.width = "100%";
+  }
+};
