@@ -140,6 +140,24 @@ body {
   to { opacity: 1; transform: translateY(0); }
 }
 
+/* INTRO FADE-OUT EFFECT */
+
+.assessment.intro-active #introScreen {
+  animation: fadeIn 0.6s ease;
+}
+
+.assessment.assessment-active #introScreen {
+  animation: fadeOut 0.4s ease forwards;
+}
+
+@keyframes fadeOut {
+  to {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+}
+
+
 /* STATE CONTROL */
 
 .assessment.intro-active #card {
