@@ -342,34 +342,69 @@ nextBtn.onclick = () => {
 
 function showResults() {
   const scores = calculateDomains();
+  const max = 9;
 
-  const max = 9; // max per domain (3 balai × ~3 klausimai)
-  const sleepLevel = riskLevel(scores.sleep, max);
-const cognitiveLevel = riskLevel(scores.cognitive, max);
-const decisionLevel = riskLevel(scores.decision, max);
-const recoveryLevel = riskLevel(scores.recovery, max);
+  const levels = {
+    sleep: riskLevel(scores.sleep, max),
+    cognitive: riskLevel(scores.cognitive, max),
+    decision: riskLevel(scores.decision, max),
+    recovery: riskLevel(scores.recovery, max)
+  };
 
+  const overall = Object.values(levels).includes("elevated")
+    ? "ELEVATED"
+    : Object.values(levels).includes("moderate")
+    ? "MODERATE"
+    : "LOW";
 
-  
   document.getElementById("card").innerHTML = `
     <div class="question">Fatigue Risk Profile</div>
 
-    ${renderBar("Sleep & Circadian Risk", scores.sleep, max)}
-    ${renderBar("Cognitive Performance Risk", scores.cognitive, max)}
-    ${renderBar("Operational Decision Risk", scores.decision, max)}
-    ${renderBar("Recovery & Mitigation Risk", scores.recovery, max)}
+    <div class="summary-line">
+      Overall fatigue-related performance risk is 
+      <span class="risk-${overall.toLowerCase()}">${overall}</span>.
+    </div>
 
-    <div class="recommendations">
-  <h4>Operational Guidance</h4>
+    ${renderBarWithLabel("Sleep & Circadian", scores.sleep, max, levels.sleep)}
+    ${renderBarWithLabel("Cognitive Performance", scores.cognitive, max, levels.cognitive)}
+    ${renderBarWithLabel("Decision-Making", scores.decision, max, levels.decision)}
+    ${renderBarWithLabel("Recovery & Mitigation", scores.recovery, max, levels.recovery)}
 
-  <p><strong>Sleep & Circadian:</strong> ${domainAdvice("sleep", sleepLevel)}</p>
-  <p><strong>Cognitive Performance:</strong> ${domainAdvice("cognitive", cognitiveLevel)}</p>
-  <p><strong>Operational Decision-Making:</strong> ${domainAdvice("decision", decisionLevel)}</p>
-  <p><strong>Recovery & Mitigation:</strong> ${domainAdvice("recovery", recoveryLevel)}</p>
-</div>
-
+    <div class="focus-section">
+      <h4>Key Focus Areas</h4>
+      ${renderFocus("Sleep & Circadian", levels.sleep, sleepFocus)}
+      ${renderFocus("Cognitive Performance", levels.cognitive, cognitiveFocus)}
+      ${renderFocus("Decision-Making", levels.decision, decisionFocus)}
+      ${renderFocus("Recovery & Mitigation", levels.recovery, recoveryFocus)}
+    </div>
   `;
 }
+
+  function renderBarWithLabel(label, value, max, level) {
+  const percent = Math.round((value / max) * 100);
+  return `
+    <div class="bar-block">
+      <div class="bar-label">
+        ${label}
+        <span class="level ${level}">${level.toUpperCase()}</span>
+      </div>
+      <div class="bar-bg">
+        <div class="bar-fill" style="width:${percent}%"></div>
+      </div>
+    </div>
+  `;
+}
+
+function renderFocus(title, level, contentFn) {
+  if (level === "low") return "";
+  return `
+    <div class="focus-card ${level}">
+      <div class="focus-title">${title}</div>
+      ${contentFn(level)}
+    </div>
+  `;
+}
+
 
 function renderBar(label, value, max) {
   const percent = Math.min(100, Math.round((value / max) * 100));
@@ -383,6 +418,37 @@ function renderBar(label, value, max) {
   `;
 }
 
+const sleepFocus = level => `
+  <p>Reduced sleep effectiveness increases alertness degradation risk.</p>
+  <ul>
+    <li>Protect sleep aligned with duty start time</li>
+    <li>Avoid circadian disruption before early/late duties</li>
+  </ul>
+`;
+
+const cognitiveFocus = level => `
+  <p>Increased cognitive load may slow information processing.</p>
+  <ul>
+    <li>Slow task execution deliberately</li>
+    <li>Use verbal cross-checks during high workload</li>
+  </ul>
+`;
+
+const decisionFocus = level => `
+  <p>Decision-making under pressure may be affected.</p>
+  <ul>
+    <li>Pause deliberately at decision points</li>
+    <li>Challenge continuation bias explicitly</li>
+  </ul>
+`;
+
+const recoveryFocus = level => `
+  <p>Insufficient recovery increases cumulative fatigue risk.</p>
+  <ul>
+    <li>Protect recovery time between duties</li>
+    <li>Reassess acceptance of additional duties</li>
+  </ul>
+`;
   
   
 };
