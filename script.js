@@ -190,6 +190,41 @@ function calculateDomains() {
   return scores;
 }
 
+function riskLevel(value, max) {
+  const ratio = value / max;
+
+  if (ratio < 0.34) return "low";
+  if (ratio < 0.67) return "moderate";
+  return "elevated";
+}
+
+function domainAdvice(domain, level) {
+  const advice = {
+    sleep: {
+      low: "Current sleep-related fatigue indicators appear well controlled. Maintain existing rest strategies.",
+      moderate: "Review recent sleep duration and circadian alignment, particularly before early or late duty starts.",
+      elevated: "High sleep-related fatigue risk detected. Consider delaying non-essential duties and prioritize recovery sleep."
+    },
+    cognitive: {
+      low: "Cognitive performance indicators are within expected operational limits.",
+      moderate: "Increased cognitive effort noted. Apply deliberate pacing and structured cross-checking.",
+      elevated: "Elevated cognitive fatigue risk. Expect slowed processing and increase reliance on standard operating procedures."
+    },
+    decision: {
+      low: "Decision-making indicators suggest stable operational judgement.",
+      moderate: "Decision bias risk observed. Actively challenge continuation bias during time-pressured situations.",
+      elevated: "High decision-making risk detected. Avoid discretionary task continuation and seek peer verification."
+    },
+    recovery: {
+      low: "Recovery practices appear adequate between duty periods.",
+      moderate: "Recovery effectiveness may be reduced. Reassess rest opportunities and cumulative duty impact.",
+      elevated: "Insufficient recovery detected. Immediate recovery prioritization is strongly recommended."
+    }
+  };
+
+  return advice[domain][level];
+}
+
 
 nextBtn.onclick = () => {
   current++;
@@ -208,7 +243,13 @@ function showResults() {
   const scores = calculateDomains();
 
   const max = 9; // max per domain (3 balai × ~3 klausimai)
+  const sleepLevel = riskLevel(scores.sleep, max);
+const cognitiveLevel = riskLevel(scores.cognitive, max);
+const decisionLevel = riskLevel(scores.decision, max);
+const recoveryLevel = riskLevel(scores.recovery, max);
 
+
+  
   document.getElementById("card").innerHTML = `
     <div class="question">Fatigue Risk Profile</div>
 
@@ -218,13 +259,14 @@ function showResults() {
     ${renderBar("Recovery & Mitigation Risk", scores.recovery, max)}
 
     <div class="recommendations">
-      <h4>Operational Guidance</h4>
-      <ul>
-        <li><strong>Before duty:</strong> Review sleep adequacy and consider mitigation strategies if alertness is reduced.</li>
-        <li><strong>During duty:</strong> Increase deliberate cross-checking during high workload phases.</li>
-        <li><strong>Recovery:</strong> Prioritize rest opportunities and avoid cumulative sleep restriction.</li>
-      </ul>
-    </div>
+  <h4>Operational Guidance</h4>
+
+  <p><strong>Sleep & Circadian:</strong> ${domainAdvice("sleep", sleepLevel)}</p>
+  <p><strong>Cognitive Performance:</strong> ${domainAdvice("cognitive", cognitiveLevel)}</p>
+  <p><strong>Operational Decision-Making:</strong> ${domainAdvice("decision", decisionLevel)}</p>
+  <p><strong>Recovery & Mitigation:</strong> ${domainAdvice("recovery", recoveryLevel)}</p>
+</div>
+
   `;
 }
 
@@ -239,6 +281,7 @@ function renderBar(label, value, max) {
     </div>
   `;
 }
+
   
   
 };
