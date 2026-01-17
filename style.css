@@ -1,0 +1,56 @@
+body {
+  font-family: Arial, sans-serif;
+  background: linear-gradient(#0b1d2a, #1e3c5a);
+  color: white;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 800px;
+  margin: auto;
+  padding: 40px;
+}
+
+.question {
+  margin-bottom: 30px;
+}
+
+label {
+  display: block;
+  margin: 8px 0;
+}
+
+button {
+  padding: 15px 30px;
+  background: #00aaff;
+  border: none;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #008ecc;
+}
+
+.hidden {
+  display: none;
+}
+
+/* Loading spinner */
+.spinner {
+  width: 60px;
+  height: 60px;
+  border: 6px solid #ccc;
+  border-top: 6px solid #00aaff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 40px auto;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
