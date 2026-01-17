@@ -25,6 +25,69 @@ const questions = [
       "Often",
       "Almost every duty period"
     ]
+  },
+  {
+    text: "During routine operations, how often do you need to consciously slow yourself down to avoid errors?",
+    options: [
+      "Rarely",
+      "Occasionally",
+      "Frequently",
+      "Almost always"
+    ]
+  },
+  {
+    text: "How often do you experience difficulty recalling standard procedures without reference?",
+    options: [
+      "Never",
+      "Occasionally",
+      "Frequently",
+      "Very frequently"
+    ]
+  },
+  {
+    text: "How would you describe your alertness during the final sectors of multi-leg duty days?",
+    options: [
+      "Fully alert",
+      "Slightly reduced",
+      "Noticeably reduced",
+      "Significantly impaired"
+    ]
+  },
+  {
+    text: "How often do you continue a task despite recognizing reduced performance effectiveness?",
+    options: [
+      "Never",
+      "Occasionally",
+      "Frequently",
+      "Almost every duty period"
+    ]
+  },
+  {
+    text: "How often do you feel that recovery between duty periods is insufficient?",
+    options: [
+      "Rarely",
+      "Sometimes",
+      "Often",
+      "Almost always"
+    ]
+  },
+  {
+    text: "During high workload phases, how often do you rely on habit rather than deliberate cross-checking?",
+    options: [
+      "Rarely",
+      "Sometimes",
+      "Often",
+      "Almost always"
+    ]
+  },
+  {
+    text: "How frequently do you notice delayed recognition of minor deviations or errors?",
+    options: [
+      "Never",
+      "Occasionally",
+      "Frequently",
+      "Very frequently"
+    ]
   }
 ];
 
