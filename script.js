@@ -15,13 +15,6 @@ loadQuestion();
 }
 
 
-startBtn.onclick = () => {
-  introScreen.classList.add("hidden");
-  document.getElementById("card").classList.remove("hidden");
-  loadQuestion();
-};
-
-
 const questions = [
   {
     text: "During recent duty periods, how often have you continued operating despite feeling cognitively slowed or less alert than normal?",
