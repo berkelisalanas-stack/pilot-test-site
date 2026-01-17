@@ -1,6 +1,16 @@
 const introScreen = document.getElementById("introScreen");
 const startBtn = document.getElementById("startBtn");
 
+if (startBtn) {
+  startBtn.onclick = () => {
+    introScreen.classList.add("hidden");
+    document.getElementById("card").classList.remove("hidden");
+    current = 0;
+    loadQuestion();
+  };
+}
+
+
 startBtn.onclick = () => {
   introScreen.classList.add("hidden");
   document.getElementById("card").classList.remove("hidden");
