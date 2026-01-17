@@ -1,3 +1,13 @@
+const introScreen = document.getElementById("introScreen");
+const startBtn = document.getElementById("startBtn");
+
+startBtn.onclick = () => {
+  introScreen.classList.add("hidden");
+  document.getElementById("card").classList.remove("hidden");
+  loadQuestion();
+};
+
+
 const questions = [
   {
     text: "During recent duty periods, how often have you continued operating despite feeling cognitively slowed or less alert than normal?",
@@ -100,7 +110,6 @@ const nextBtn = document.getElementById("nextBtn");
 const progressBar = document.getElementById("progressBar");
 const stepText = document.getElementById("stepText");
 
-loadQuestion();
 
 function loadQuestion() {
   questionText.textContent = questions[current].text;
