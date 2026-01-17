@@ -11,23 +11,43 @@
 
 <div class="assessment">
 
-  <div class="header">
-    <div class="title">Fatigue & Performance Risk Assessment</div>
-    <div class="progress">
-      <div class="progress-bar" id="progressBar"></div>
+  <div class="assessment">
+
+  <!-- INTRO / BRIEFING -->
+  <div class="card intro" id="introScreen">
+    <div class="question">
+      Fatigue & Performance Risk Assessment
     </div>
-    <div class="step" id="stepText">Assessment 1 of 6</div>
+
+    <p class="intro-text">
+      This internal-style self-assessment is designed to increase awareness of
+      fatigue-related performance risks in flight operations.
+    </p>
+
+    <p class="intro-text">
+      The assessment focuses on operational indicators such as cognitive slowing,
+      situational awareness degradation, and continuation bias.
+    </p>
+
+    <p class="intro-text subtle">
+      This tool does not provide a diagnosis. It supports self-reflection and
+      risk awareness prior to or following duty periods.
+    </p>
+
+    <button class="next-btn enabled" id="startBtn">
+      Start Assessment
+    </button>
   </div>
 
-  <div class="card" id="card">
+  <!-- ASSESSMENT CARD -->
+  <div class="card hidden" id="card">
     <div class="question" id="questionText"></div>
-
     <div class="answers" id="answers"></div>
-
     <button class="next-btn" id="nextBtn" disabled>Continue</button>
   </div>
 
 </div>
+
 
 <script src="script.js"></script>
 </body>
