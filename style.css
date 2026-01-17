@@ -1,56 +1,120 @@
-body {
-  font-family: Arial, sans-serif;
-  background: linear-gradient(#0b1d2a, #1e3c5a);
-  color: white;
-  margin: 0;
-  padding: 0;
+* {
+  box-sizing: border-box;
 }
 
-.container {
-  max-width: 800px;
-  margin: auto;
+body {
+  margin: 0;
+  font-family: "Segoe UI", system-ui, sans-serif;
+  color: #ffffff;
+  overflow: hidden;
+}
+
+.background {
+  position: fixed;
+  inset: 0;
+  background:
+    linear-gradient(to bottom, rgba(8,15,25,0.85), rgba(8,15,25,0.95)),
+    url("https://images.unsplash.com/photo-1529070538774-1843cb3265df");
+  background-size: cover;
+  background-position: center;
+  filter: blur(2px);
+}
+
+.assessment {
+  position: relative;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.header {
+  position: absolute;
+  top: 40px;
+  width: 600px;
+}
+
+.title {
+  font-size: 20px;
+  letter-spacing: 0.08em;
+  opacity: 0.9;
+}
+
+.progress {
+  margin-top: 12px;
+  height: 4px;
+  background: rgba(255,255,255,0.15);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progress-bar {
+  height: 100%;
+  width: 0%;
+  background: #4da3ff;
+  transition: width 0.6s ease;
+}
+
+.step {
+  margin-top: 8px;
+  font-size: 12px;
+  opacity: 0.6;
+}
+
+.card {
+  width: 600px;
+  background: rgba(15,25,40,0.85);
+  backdrop-filter: blur(12px);
+  border-radius: 12px;
   padding: 40px;
+  animation: fadeIn 0.6s ease;
 }
 
 .question {
-  margin-bottom: 30px;
+  font-size: 22px;
+  line-height: 1.4;
 }
 
-label {
-  display: block;
-  margin: 8px 0;
+.answers {
+  margin-top: 30px;
 }
 
-button {
-  padding: 15px 30px;
-  background: #00aaff;
+.answer {
+  padding: 14px 18px;
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.15);
+  margin-bottom: 12px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.answer:hover {
+  background: rgba(255,255,255,0.05);
+}
+
+.answer.selected {
+  border-color: #4da3ff;
+  background: rgba(77,163,255,0.12);
+}
+
+.next-btn {
+  margin-top: 30px;
+  width: 100%;
+  padding: 14px;
+  background: #4da3ff;
   border: none;
-  color: white;
+  border-radius: 8px;
   font-size: 16px;
   cursor: pointer;
+  opacity: 0.4;
+  transition: opacity 0.3s ease;
 }
 
-button:hover {
-  background: #008ecc;
+.next-btn.enabled {
+  opacity: 1;
 }
 
-.hidden {
-  display: none;
-}
-
-/* Loading spinner */
-.spinner {
-  width: 60px;
-  height: 60px;
-  border: 6px solid #ccc;
-  border-top: 6px solid #00aaff;
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-  margin: 40px auto;
-}
-
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
