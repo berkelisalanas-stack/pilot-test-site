@@ -3,10 +3,14 @@ const startBtn = document.getElementById("startBtn");
 
 if (startBtn) {
   startBtn.onclick = () => {
-    introScreen.classList.add("hidden");
-    document.getElementById("card").classList.remove("hidden");
-    current = 0;
-    loadQuestion();
+   const assessment = document.querySelector(".assessment");
+
+assessment.classList.remove("intro-active");
+assessment.classList.add("assessment-active");
+
+current = 0;
+loadQuestion();
+
   };
 }
 
