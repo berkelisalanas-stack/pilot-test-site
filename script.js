@@ -201,24 +201,125 @@ function riskLevel(value, max) {
 function domainAdvice(domain, level) {
   const advice = {
     sleep: {
-      low: "Current sleep-related fatigue indicators appear well controlled. Maintain existing rest strategies.",
-      moderate: "Review recent sleep duration and circadian alignment, particularly before early or late duty starts.",
-      elevated: "High sleep-related fatigue risk detected. Consider delaying non-essential duties and prioritize recovery sleep."
+      low: `
+        <div class="advice-block">
+          <strong>Status:</strong> Sleep-related fatigue indicators are within expected operational limits.
+          <div class="advice-line">→ Maintain consistent sleep timing and avoid unnecessary circadian disruption.</div>
+        </div>
+      `,
+      moderate: `
+        <div class="advice-block">
+          <strong>Signal:</strong> Partial circadian misalignment or reduced sleep quality detected.
+          <div class="advice-section">
+            <strong>Before duty</strong>
+            <div class="advice-line">→ Protect a sleep opportunity aligned with upcoming duty start time.</div>
+          </div>
+          <div class="advice-section">
+            <strong>During duty</strong>
+            <div class="advice-line">→ Anticipate reduced alertness during circadian low points and plan workload accordingly.</div>
+          </div>
+        </div>
+      `,
+      elevated: `
+        <div class="advice-block">
+          <strong>High fatigue risk:</strong> Significant sleep-related impairment likely.
+          <div class="advice-section">
+            <strong>Before duty</strong>
+            <div class="advice-line">→ Eliminate non-essential activities and prioritize full recovery sleep.</div>
+          </div>
+          <div class="advice-section">
+            <strong>During duty</strong>
+            <div class="advice-line">→ Apply deliberate pacing and structured cross-checking throughout the duty period.</div>
+          </div>
+          <div class="advice-section">
+            <strong>After duty</strong>
+            <div class="advice-line">→ Prioritize recovery before accepting additional duties.</div>
+          </div>
+        </div>
+      `
     },
+
     cognitive: {
-      low: "Cognitive performance indicators are within expected operational limits.",
-      moderate: "Increased cognitive effort noted. Apply deliberate pacing and structured cross-checking.",
-      elevated: "Elevated cognitive fatigue risk. Expect slowed processing and increase reliance on standard operating procedures."
+      low: `
+        <div class="advice-block">
+          <strong>Status:</strong> Cognitive performance indicators appear stable.
+          <div class="advice-line">→ Continue standard workload management and monitoring practices.</div>
+        </div>
+      `,
+      moderate: `
+        <div class="advice-block">
+          <strong>Signal:</strong> Increased cognitive effort required during routine tasks.
+          <div class="advice-section">
+            <strong>During duty</strong>
+            <div class="advice-line">→ Consciously slow task execution and verbalize key actions.</div>
+            <div class="advice-line">→ Rely on written or electronic references rather than memory.</div>
+          </div>
+        </div>
+      `,
+      elevated: `
+        <div class="advice-block">
+          <strong>High fatigue risk:</strong> Slowed information processing and increased error susceptibility expected.
+          <div class="advice-section">
+            <strong>During duty</strong>
+            <div class="advice-line">→ Maintain strict SOP adherence and avoid task compression.</div>
+            <div class="advice-line">→ Increase deliberate cross-checking, especially during high workload phases.</div>
+          </div>
+        </div>
+      `
     },
+
     decision: {
-      low: "Decision-making indicators suggest stable operational judgement.",
-      moderate: "Decision bias risk observed. Actively challenge continuation bias during time-pressured situations.",
-      elevated: "High decision-making risk detected. Avoid discretionary task continuation and seek peer verification."
+      low: `
+        <div class="advice-block">
+          <strong>Status:</strong> Decision-making patterns suggest stable operational judgement.
+        </div>
+      `,
+      moderate: `
+        <div class="advice-block">
+          <strong>Signal:</strong> Increased risk of continuation bias detected.
+          <div class="advice-section">
+            <strong>During duty</strong>
+            <div class="advice-line">→ Pause deliberately at decision points and consider alternative courses of action.</div>
+          </div>
+        </div>
+      `,
+      elevated: `
+        <div class="advice-block">
+          <strong>High decision risk:</strong> Degraded judgement likely under time pressure.
+          <div class="advice-section">
+            <strong>During duty</strong>
+            <div class="advice-line">→ Avoid discretionary task continuation.</div>
+            <div class="advice-line">→ Actively seek peer verification and select conservative options.</div>
+          </div>
+        </div>
+      `
     },
+
     recovery: {
-      low: "Recovery practices appear adequate between duty periods.",
-      moderate: "Recovery effectiveness may be reduced. Reassess rest opportunities and cumulative duty impact.",
-      elevated: "Insufficient recovery detected. Immediate recovery prioritization is strongly recommended."
+      low: `
+        <div class="advice-block">
+          <strong>Status:</strong> Recovery between duty periods appears effective.
+          <div class="advice-line">→ Maintain current rest and workload management strategies.</div>
+        </div>
+      `,
+      moderate: `
+        <div class="advice-block">
+          <strong>Signal:</strong> Reduced recovery effectiveness observed.
+          <div class="advice-section">
+            <strong>After duty</strong>
+            <div class="advice-line">→ Protect recovery time and reassess cumulative duty impact.</div>
+          </div>
+        </div>
+      `,
+      elevated: `
+        <div class="advice-block">
+          <strong>High recovery risk:</strong> Insufficient recovery across duty periods detected.
+          <div class="advice-section">
+            <strong>Immediate action</strong>
+            <div class="advice-line">→ Prioritize rest opportunities and reconsider acceptance of additional duties.</div>
+          </div>
+        </div>
+      `
     }
   };
 
